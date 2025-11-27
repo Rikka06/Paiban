@@ -1,0 +1,5 @@
+{
+  "name": "Copy of 后厨智能排班系统",
+  "description": "基于S型轮岗机制的餐饮后厨排班管理系统，支持自动轮转、考勤管理及一键生成微信通知模板。",
+  "requestFramePermissions": []
+}
