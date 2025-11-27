@@ -288,22 +288,22 @@ function App() {
     const jobs = type === ShiftType.OPENING ? OPENING_JOBS : CLOSING_JOBS;
     const header = type === ShiftType.OPENING ? JOB_TEMPLATES.OPENING_HEADER : JOB_TEMPLATES.CLOSING_HEADER;
 
-    let text = `${header} (${selectedDate})\n`;
+    let text = `${header}\n`;
     
     jobs.forEach(job => {
       const staffIds = assignments[job.id] || [];
-      const names = staffIds.map(id => getStaffName(id)).join('、');
+      const names = staffIds.length > 0 ? staffIds.map(id => getStaffName(id)).join('、') : '';
       
-      text += `\n📌 ${job.name}：\n`;
-      if (names) {
-        text += `   人员：${names}\n`;
-      } else {
-        text += `   人员：(待定)\n`;
-      }
-      text += `   内容：${job.description}`;
+      text += `${job.name}：${names}\n`;
+      text += `${job.description}\n`;
     });
 
-    navigator.clipboard.writeText(text).then(() => alert('📋 已复制到剪贴板'));
+    // Add footer only for closing
+    if (type === ShiftType.CLOSING) {
+        text += `\n${JOB_TEMPLATES.FOOTER}`;
+    }
+
+    navigator.clipboard.writeText(text).then(() => alert('📋 已复制到剪贴板，格式严格遵守模板'));
   };
 
   // --- Components ---
